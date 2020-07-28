@@ -1,2 +1,2 @@
 *.sqlite3
-schema.py
+.DS_Store
