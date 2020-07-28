@@ -22,10 +22,10 @@ class UpdateBook(graphene.Mutation):
     book = graphene.Field(Book_Node_Type)
 
     class Arguments:
-        book_id = Int(required=True)
+        book_title = graphene.String(required=True)
 
-    def mutate(self, info, book_id):
-        book = Book.objects.get(id=book_id)
+    def mutate(self, info, book_title):
+        book = Book.objects.get(title=book_title)
         book.reserved = not book.reserved
         book.save()
 
