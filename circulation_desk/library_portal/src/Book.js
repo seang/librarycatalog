@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import fetchGraphQL from "./fetchGraphQL";
 
 class Book extends Component {
-
   toggleReservation = (event) => {
     fetchGraphQL(`
     mutation {
@@ -13,21 +12,23 @@ class Book extends Component {
           reserved
           title
         }
-      }
     }
-     `)
-      .then((response) => {
-        console.log(response)})
   }
+     `).then((response) => {
+      console.log(response);
+    });
+  };
   render(props) {
     return (
       <div>
+        <br></br>
         <div>
-          {this.props.book.title} {this.props.book.author}
+          Title: {this.props.book.title} | Author: {this.props.book.author} | Reserved: {String(this.props.book.reserved)} |  <button value={this.props.book.title} onClick={this.toggleReservation}>
+          Toggle Reservation
+        </button>
         </div>
-        <div>Reserved: {String(this.props.book.reserved)}</div>
-        <div>ID: {this.props.book.id}</div>
-        <button value={this.props.book.title}onClick={this.toggleReservation}>Toggle Reservation</button>
+        
+       
       </div>
     );
   }
