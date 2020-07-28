@@ -1,19 +1,28 @@
 import graphene
+from graphene import Connection, ConnectionField, Node, Int
 from graphene_django import DjangoObjectType
 
 from .models import Book
 
 
-class BookType(DjangoObjectType):
+class Book_Node_Type(DjangoObjectType):
     class Meta:
         model = Book
+        interfaces = (Node, )
 
+class Book_Connection(Connection):
+  class Meta:
+    node = Book_Node_Type
+  count = Int()
+
+  def resolve_count(self,root,info):
+    return len(root.edges)
 
 class UpdateBook(graphene.Mutation):
-    book = graphene.Field(BookType)
+    book = graphene.Field(Book_Node_Type)
 
     class Arguments:
-        book_id = graphene.Int(required=True)
+        book_id = Int(required=True)
 
     def mutate(self, info, book_id):
         book = Book.objects.get(id=book_id)
@@ -24,9 +33,8 @@ class UpdateBook(graphene.Mutation):
 
 
 class Query(graphene.ObjectType):
-    books = graphene.List(BookType, search=graphene.String())
-
-    def resolve_books(self, info, search=None):
+    books = ConnectionField(Book_Connection, search=graphene.String())
+    def resolve_books(self, info, search=None,**kwargs):
         if search:
             return Book.objects.filter(title__contains=search)
         return Book.objects.all()
