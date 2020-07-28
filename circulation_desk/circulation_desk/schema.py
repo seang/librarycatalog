@@ -2,10 +2,13 @@ import graphene
 import books.schema
 import members.schema
 
+
 class Query(books.schema.Query, graphene.ObjectType):
-  pass
+    pass
+
 
 class Mutation(members.schema.Mutation, books.schema.Mutation, graphene.ObjectType):
-  pass
+    pass
 
-schema = graphene.Schema(query=Query,mutation=Mutation)
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
