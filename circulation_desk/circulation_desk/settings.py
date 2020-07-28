@@ -43,7 +43,14 @@ INSTALLED_APPS = [
 ]
 
 GRAPHENE = {
-  'SCHEMA': 'circulation_desk.schema.schema'
+    'SCHEMA': 'circulation_desk.schema.schema',
+    'RELAY_CONNECTION_MAX_LIMIT': 3,
+}
+
+GRAPHENE_DJANGO_EXTRAS = {
+    'DEFAULT_PAGINATION_CLASS': 'graphene_django_extras.paginations.LimitOffsetGraphqlPagination',
+    'DEFAULT_PAGE_SIZE': 3,
+    'PAGE_SIZE': 3,
 }
 
 MIDDLEWARE = [
@@ -59,7 +66,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-  'http://localhost:3000'
+    'http://localhost:3000'
 ]
 
 ROOT_URLCONF = 'circulation_desk.urls'
