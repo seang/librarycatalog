@@ -59,7 +59,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-  'localhost:3000'
+  'http://localhost:3000'
 ]
 
 ROOT_URLCONF = 'circulation_desk.urls'
